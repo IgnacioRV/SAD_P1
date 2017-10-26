@@ -1,0 +1,43 @@
+Referència observer: 
+https://www.javaworld.com/article/2077258/learn-java/observer-and-observable.html
+
+
+Line extends Observable  <-- Model
+    void setStatus() --> Posa o treu de l'estat insert
+    Boolean getStatus() --> Indica si esta en ins 
+    String getLine() --> Text a la linea
+    int getPos() --> Posicio del cursor
+    void addChar(char) → notifyObservers()
+    void delChar() → notifyObservers() --> Si no esborra no fa res 
+    void suprChar() → notifyObservers()
+    void moveBack() → notifyObservers()
+    void moveFront() → notifyObservers()
+    void moveHome() → notifyObservers()
+    void moveEnd() → notifyObservers()
+    (addObserver)
+	--> Les funcions que modifiquen l'estat es podrien agrupar pero de moment les deixo separades per mes claredat
+    
+Console implements Observer <-- View
+    update()
+    	
+EditableBufferedReader(Line line)  <-- Controller
+    read() --> Modifica estat de line --> Quan line es modifica avisa a console que actualitzi la vista 
+    setRaw()
+    unsetRaw()
+    readLine() 
+
+
+public static void main(String [] args)
+   {
+      Line line = new Line()
+	EditableBufferedReader ebr = new EditableBufferedReader(line)
+	Console console = new Console(line)
+	line.addObserver(console)
+	ebr.setRaw()
+	while(true) {
+		ebr.read()
+	}
+	ebr.unsetRaw()
+   }
+}
+	
